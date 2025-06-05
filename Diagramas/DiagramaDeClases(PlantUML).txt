@@ -1,0 +1,88 @@
+@startuml
+
+' Clases del sistema
+class Alumno {
+
+id: int
+
+nombre: string
+
+correo: string
+
+contraseña: string
+
+iniciarSesion(): boolean
+
+consultarHorario(): Horario
+
+consultarCalificaciones(): list<Calificacion>
+
+modificarDatos(datos: string): void
+
+renovarBeca(): void
+}
+
+class PortalWeb {
+
+validarCredenciales(correo: string, contraseña: string): boolean
+
+obtenerHorario(idAlumno: int): Horario
+
+obtenerCalificaciones(idAlumno: int): list<Calificacion>
+
+actualizarDatos(idAlumno: int, datos: string): void
+
+procesarRenovacion(idAlumno: int): void
+}
+
+class Auth {
+
+autenticar(usuario: string, clave: string): boolean
+}
+
+class ModuloAcademico {
+
+obtenerHorario(idAlumno: int): Horario
+
+obtenerCalificaciones(idAlumno: int): list<Calificacion>
+}
+
+class ModuloAdministrativo {
+
+actualizarDatos(idAlumno: int, datos: string): void
+
+procesarRenovacion(idAlumno: int): void
+}
+
+class BaseDeDatos {
+
+query(sql: string): object
+}
+
+class Horario {
+
+dias: list<string>
+
+horas: list<string>
+}
+
+class Calificacion {
+
+materia: string
+
+nota: float
+}
+
+' Relaciones y cardinalidades
+Alumno "1" --> "1" PortalWeb : usa
+PortalWeb --> "1" Auth : autentica
+PortalWeb --> "1" ModuloAcademico : consulta
+PortalWeb --> "1" ModuloAdministrativo : gestiona
+ModuloAcademico --> "1" BaseDeDatos : consulta
+ModuloAdministrativo --> "1" BaseDeDatos : actualiza
+
+' Relaciones visuales con entidades
+BaseDeDatos ..> Horario : contiene
+BaseDeDatos ..> Calificacion : contiene
+
+@enduml

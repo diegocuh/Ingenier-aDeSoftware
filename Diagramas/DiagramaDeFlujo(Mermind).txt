@@ -1,0 +1,95 @@
+flowchart TD
+    Start[Inicio de sesión] --> Auth{¿Credenciales correctas?}
+    Auth -- No --> Denied[Acceso denegado]
+    Auth -- Sí --> Login[Inicio de sesión completo]
+    Login --> A[Página de inicio]
+
+    %% Opciones del portal
+    A --> B1[Consultar calificaciones]
+    A --> B2[Enviar trabajos]
+    A --> B3[Solicitar documentos escolares]
+    A --> B4[Modificar datos personales]
+    A --> B5[Evaluación docente]
+    A --> B6[Consultar adeudos]
+    A --> B7[Renovación de beca]
+    A --> B8[Materiales de estudio]
+    A --> B9[Consultar asistencias]
+
+    %% Subprocesos simplificados con sus validaciones (resumen)
+
+    B1 --> C1{¿Tiene calificaciones?}
+    C1 -- No --> D1["Sin calificaciones registradas"]
+    C1 -- Sí --> E1[Mostrar calificaciones]
+    D1 --> A
+    E1 --> A
+
+    B2 --> C2{¿Tiene trabajos pendientes?}
+    C2 -- No --> D2["No hay trabajos pendientes"]
+    C2 -- Sí --> E2[Mostrar tarea pendiente]
+    E2 --> F2{¿A tiempo?}
+    F2 -- Sí --> G2[Mostrar tiempo restante]
+    F2 -- No --> H2["Trabajo fuera de tiempo"]
+    D2 --> A
+    G2 --> A
+    H2 --> A
+
+    B3 --> C3[Seleccionar tipo de documento]
+    C3 --> D3{¿Cumple requisitos?}
+    D3 -- No --> E3["No cumple requisitos"]
+    D3 -- Sí --> F3[Enviar solicitud]
+    E3 --> A
+    F3 --> A
+
+    B4 --> C4[Seleccionar dato a modificar]
+    C4 --> D4{¿Dato válido?}
+    D4 -- No --> E4["Error en la modificación"]
+    D4 -- Sí --> F4[Confirmar modificación]
+    E4 --> A
+    F4 --> A
+
+    B5 --> C5{¿Tiene materias?}
+    C5 -- No --> D5["No tiene materias inscritas"]
+    C5 -- Sí --> E5[Seleccionar docente]
+    E5 --> F5{¿Ya evaluado?}
+    F5 -- Sí --> G5["Ya evaluado"]
+    F5 -- No --> H5[Realizar evaluación]
+    H5 --> I5["Evaluación enviada"]
+    D5 --> A
+    G5 --> A
+    I5 --> A
+
+    B6 --> C6{¿Acceso autorizado?}
+    C6 -- No --> D6["Acceso no autorizado"]
+    C6 -- Sí --> E6{¿Tiene adeudos?}
+    E6 -- No --> F6["Sin adeudos"]
+    E6 -- Sí --> G6[Mostrar adeudos]
+    D6 --> A
+    F6 --> A
+    G6 --> A
+
+    B7 --> C7{¿Tiene beca activa?}
+    C7 -- No --> D7["No tiene beca para renovar"]
+    C7 -- Sí --> E7{¿Cumple requisitos?}
+    E7 -- No --> F7["No cumple requisitos"]
+    E7 -- Sí --> G7["Renovación enviada"]
+    D7 --> A
+    F7 --> A
+    G7 --> A
+
+    B8 --> C8{¿Inscrito en materias?}
+    C8 -- No --> D8["No tiene materias inscritas"]
+    C8 -- Sí --> E8{¿Hay materiales?}
+    E8 -- No --> F8["No hay materiales disponibles"]
+    E8 -- Sí --> G8[Mostrar materiales]
+    D8 --> A
+    F8 --> A
+    G8 --> A
+
+    B9 --> C9{¿Inscrito en materias?}
+    C9 -- No --> D9["No tiene materias inscritas"]
+    C9 -- Sí --> E9{¿Más de 3 inasistencias?}
+    E9 -- Sí --> F9["Sin derecho"]
+    E9 -- No --> G9[Mostrar asistencias]
+    D9 --> A
+    F9 --> A
+    G9 --> A

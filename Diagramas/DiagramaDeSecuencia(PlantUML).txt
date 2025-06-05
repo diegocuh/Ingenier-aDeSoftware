@@ -1,0 +1,21 @@
+@startuml
+actor Estudiante
+participant "Interfaz del Estudiante" as Interfaz
+participant "Módulo de Autenticación" as Autenticacion
+participant "Base de Datos" as BD
+
+Estudiante -> Interfaz : Ingresar usuario y contraseña
+Interfaz -> Autenticacion : validarCredenciales(usuario, contraseña)
+Autenticacion -> BD : consultarUsuario(usuario)
+BD --> Autenticacion : datos del usuario (hash contraseña)
+Autenticacion -> Autenticacion : verificar contraseña
+
+alt Credenciales válidas
+    Autenticacion --> Interfaz : autenticación exitosa
+    Interfaz --> Estudiante : acceso concedido
+else Credenciales inválidas
+    Autenticacion --> Interfaz : error de autenticación
+    Interfaz --> Estudiante : acceso denegado
+end
+@enduml
+

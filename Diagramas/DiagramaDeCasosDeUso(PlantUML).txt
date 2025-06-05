@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor Alumno
+actor Docente
+actor Administrador
+
+rectangle "Portal Educativo" {
+
+usecase "Iniciar sesión" as UC_Login
+usecase "Consultar horario" as UC_Horario
+usecase "Modificar datos personales" as UC_ModDatos
+usecase "Renovar cambios" as UC_Renovar
+usecase "Consultar calificaciones" as UC_Calificaciones
+usecase "Gestionar usuarios" as UC_Usuarios
+usecase "Modificar contenido" as UC_Contenido
+usecase "Ver perfil" as UC_Perfil
+usecase "Cerrar sesión" as UC_Logout
+usecase "Calificar tarea" as UC_Calificar
+usecase "Ver cursos a cargo" as UC_Cursos
+
+' Relaciones comunes
+Alumno --> UC_Login
+Docente --> UC_Login
+Administrador --> UC_Login
+
+Alumno --> UC_Horario
+Alumno --> UC_ModDatos
+UC_ModDatos --> UC_Renovar : <<include>>
+Alumno --> UC_Calificaciones
+Alumno --> UC_Perfil
+Alumno --> UC_Logout
+
+Docente --> UC_Calificar
+Docente --> UC_Cursos
+Docente --> UC_ModDatos
+UC_ModDatos --> UC_Renovar : <<include>>
+Docente --> UC_Perfil
+Docente --> UC_Logout
+
+Administrador --> UC_Usuarios
+Administrador --> UC_Contenido
+Administrador --> UC_Perfil
+Administrador --> UC_Logout
+}
+@enduml

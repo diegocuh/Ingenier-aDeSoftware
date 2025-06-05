@@ -1,0 +1,27 @@
+@startuml
+actor Estudiante
+participant "Interfaz del Estudiante" as Interfaz
+participant "Módulo de Gestión Académica" as Gestion
+participant "Base de Datos" as BD
+
+Estudiante -> Interfaz : Iniciar sesión
+Interfaz -> Gestion : validarCredenciales()
+Gestion -> BD : verificarUsuario()
+BD --> Gestion : datos del usuario
+
+alt Credenciales válidas
+    Gestion --> Interfaz : autenticación exitosa
+    Interfaz --> Estudiante : acceso concedido
+
+    Estudiante -> Interfaz : Seleccionar periodo académico
+    Interfaz -> Gestion : obtenerCalificaciones(periodoID)
+    Gestion -> BD : consultarCalificaciones(estudianteID, periodoID)
+    BD --> Gestion : lista de calificaciones
+    Gestion --> Interfaz : calificaciones del periodo
+    Interfaz --> Estudiante : mostrar calificaciones
+
+else Credenciales inválidas
+    Gestion --> Interfaz : error de autenticación
+    Interfaz --> Estudiante : acceso denegado
+end
+@enduml

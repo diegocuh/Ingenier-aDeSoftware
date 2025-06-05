@@ -1,0 +1,38 @@
+@startuml
+[*] --> NoAutenticado : iniciarSistema()
+
+state NoAutenticado {
+    [*] --> EsperandoLogin
+    EsperandoLogin --> Autenticado : loginExitoso()
+    EsperandoLogin --> ErrorAutenticacion : loginFallido()
+}
+
+ErrorAutenticacion --> NoAutenticado : intentarDeNuevo()
+
+state Autenticado {
+    [*] --> Inicio
+
+    state GestionAcademica {
+        [*] --> ConsultarMaterias
+        ConsultarMaterias --> VerCalificaciones : consultarCalificaciones()
+        VerCalificaciones --> [*] : volverInicio()
+    }
+
+    state GestionAdministrativa {
+        [*] --> VerPagos
+        VerPagos --> DescargarComprobante : descargarComprobante()
+        DescargarComprobante --> [*] : volverInicio()
+    }
+
+    Inicio --> GestionAcademica : verMaterias()
+    Inicio --> GestionAdministrativa : verPagos()
+    GestionAcademica --> Inicio : volverInicio()
+    GestionAdministrativa --> Inicio : volverInicio()
+}
+
+Autenticado --> SesionInactiva : tiempoExpirado()
+SesionInactiva --> NoAutenticado : redirigirLogin()
+
+Autenticado --> SesionTerminada : cerrarSesion()
+SesionTerminada --> [*]
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+object Alumno
+object PortalWeb
+object Auth
+object ModuloAcademico
+object ModuloAdministrativo
+object BaseDeDatos
+
+Alumno --> PortalWeb : 1: iniciarSesion()
+PortalWeb --> Auth : 2: validarCredenciales()
+Auth --> PortalWeb : 3: respuesta()
+
+Alumno --> PortalWeb : 4.1: consultarHorario()
+PortalWeb --> ModuloAcademico : 4.1.2: obtenerHorario()
+ModuloAcademico --> BaseDeDatos : 4.1.3: queryHorario()
+
+Alumno --> PortalWeb : 4.2: consultarCalificaciones()
+PortalWeb --> ModuloAcademico : 4.2.1: obtenerCalificaciones()
+ModuloAcademico --> BaseDeDatos : 4.2.2: queryCalificaciones()
+
+Alumno --> PortalWeb : 4.3: modificarDatos()
+PortalWeb --> ModuloAdministrativo : 4.3.1: actualizarDatos()
+ModuloAdministrativo --> BaseDeDatos : 4.3.2: updateDatos()
+
+Alumno --> PortalWeb : 4.4: renovarBeca()
+PortalWeb --> ModuloAdministrativo : 4.4.1: procesarRenovacion()
+ModuloAdministrativo --> BaseDeDatos : 4.4.2: actualizarEstadoBeca()
+@enduml
