@@ -1,0 +1,55 @@
+@startuml
+title Aplicación de Soporte y Mantenimiento de Equipos de Cómputo
+
+' Clases principales
+class Equipo {
+  +id: int
+  +nombre: String
+  +tipo: String
+  +marca: String
+  +modelo: String
+  +numeroSerie: String
+  +ubicacion: String
+  +estado: String
+}
+
+class SolicitudSoporte {
+  +id: int
+  +fechaCreacion: Date
+  +descripcion: String
+  +estado: String
+  +prioridad: String
+  +fechaResolucion: Date
+}
+
+class Tecnico {
+  +id: int
+  +nombre: String
+  +email: String
+  +telefono: String
+  +especialidad: String
+}
+
+class TareaMantenimiento {
+  +id: int
+  +descripcion: String
+  +fechaProgramada: Date
+  +fechaEjecucion: Date
+  +estado: String
+}
+
+class Usuario {
+  +id: int
+  +nombre: String
+  +email: String
+  +departamento: String
+}
+
+' Relaciones
+Equipo "1" -- "0..*" SolicitudSoporte : genera
+SolicitudSoporte "1" -- "1" Usuario : creadaPor
+SolicitudSoporte "1" -- "0..*" TareaMantenimiento : incluye
+TareaMantenimiento "1" -- "1" Tecnico : asignadaA
+Equipo "1" -- "0..*" TareaMantenimiento : mantenimiento
+
+@enduml
