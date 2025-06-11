@@ -1,0 +1,25 @@
+flowchart TD
+    A[Inicio] --> B[Usuario accede al sistema]
+    B --> C{¿Está registrado?}
+    C -- Sí --> D[Ingresa usuario y contraseña]
+    C -- No --> E[Se registra como nuevo usuario]
+    D --> F[Inicio de sesión exitoso]
+    E --> F
+    F --> G[Navega por el catálogo de vinos]
+    G --> H[Filtra y busca vinos]
+    H --> I[Selecciona vino]
+    I --> J[Consulta detalles del producto]
+    J --> K{¿Desea agregar al carrito?}
+    K -- Sí --> L[Agrega vino al carrito]
+    K -- No --> G
+    L --> M{¿Finalizar compra?}
+    M -- Sí --> N[Confirma productos del carrito]
+    N --> O[Elige fecha y hora de entrega]
+    O --> P[Selecciona método de pago]
+    P --> Q[Ingresa datos de tarjeta]
+    Q --> R{¿Pago exitoso?}
+    R -- Sí --> S[Compra confirmada]
+    R -- No --> T[Muestra error de pago]
+    T --> P
+    S --> U[Correo/WhatsApp de confirmación]
+    U --> V[Fin]
