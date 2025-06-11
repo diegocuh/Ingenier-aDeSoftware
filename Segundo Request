@@ -1,0 +1,36 @@
+@startuml
+title Casos de Uso - Aplicación de Soporte y Mantenimiento de Equipos
+
+left to right direction
+
+actor Usuario
+actor Tecnico
+actor Administrador
+
+rectangle "Sistema de Soporte y Mantenimiento" {
+    
+    usecase "Registrar solicitud de soporte" as UC1
+    usecase "Consultar estado de solicitud" as UC2
+    usecase "Asignar técnico a solicitud" as UC3
+    usecase "Registrar tarea de mantenimiento" as UC4
+    usecase "Actualizar estado de tarea" as UC5
+    usecase "Consultar historial de equipo" as UC6
+    usecase "Administrar equipos" as UC7
+    usecase "Administrar usuarios y técnicos" as UC8
+}
+
+' Relaciones
+Usuario --> UC1
+Usuario --> UC2
+Usuario --> UC6
+
+Tecnico --> UC4
+Tecnico --> UC5
+Tecnico --> UC2
+
+Administrador --> UC3
+Administrador --> UC6
+Administrador --> UC7
+Administrador --> UC8
+
+@enduml
