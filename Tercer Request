@@ -1,0 +1,19 @@
+@startuml
+title Diagrama de Secuencia - Registrar Solicitud de Soporte
+
+actor Usuario
+participant "Interfaz de Usuario" as UI
+participant "Controlador de Soporte" as Controller
+participant "Servicio de Soporte" as Service
+participant "Base de Datos" as DB
+
+Usuario -> UI : Ingresar solicitud
+UI -> Controller : enviarSolicitud(datos)
+Controller -> Service : procesarSolicitud(datos)
+Service -> DB : guardarSolicitud(datos)
+DB --> Service : solicitudGuardada(id)
+Service --> Controller : resultadoRegistro(id)
+Controller --> UI : mostrarConfirmacion(id)
+UI --> Usuario : Solicitud registrada con ID
+
+@enduml
